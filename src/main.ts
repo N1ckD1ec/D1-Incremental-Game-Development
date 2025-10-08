@@ -6,12 +6,11 @@ document.body.innerHTML = `
   <p>Example image asset: <img src="${exampleIconUrl}" class="icon" /></p>
 `;
 
-// Create a button 
+// Create a button
 const btn = document.createElement("button");
 btn.className = "styled";
 btn.type = "button";
 btn.textContent = "😊";
-
 
 btn.setAttribute("aria-label", "Emoji button");
 btn.addEventListener("click", () => {
