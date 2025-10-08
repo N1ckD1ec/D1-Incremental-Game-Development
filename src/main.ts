@@ -17,4 +17,4 @@ btn.addEventListener("click", () => {
   btn.textContent = btn.textContent === "😊" ? "😡" : "😊";
 });
 
-document.body.appendChild(btn);
+document.body.appendChild(btn); 
