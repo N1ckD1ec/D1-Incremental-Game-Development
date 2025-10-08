@@ -13,8 +13,11 @@ btn.type = "button";
 btn.textContent = "😊";
 
 btn.setAttribute("aria-label", "Emoji button");
+btn.setAttribute("aria-pressed", "false");
 btn.addEventListener("click", () => {
-  btn.textContent = btn.textContent === "😊" ? "😡" : "😊";
+  const isHappy = btn.textContent === "😊";
+  btn.textContent = isHappy ? "😡" : "😊";
+  btn.setAttribute("aria-pressed", String(!isHappy));
 });
 
 document.body.appendChild(btn);

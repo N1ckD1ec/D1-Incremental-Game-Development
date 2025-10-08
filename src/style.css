@@ -3,3 +3,32 @@
   vertical-align: top;
   border: 1px solid salmon;
 }
+
+/* Styled button used from main.ts */
+.styled {
+  /* increase visible size */
+  font-size: 32px; /* large emoji */
+  padding: 16px 24px; /* roomy click target */
+  border-radius: 12px;
+  border: 2px solid #cc7a00;
+  background: linear-gradient(180deg, #ffd78a, #ffb74d);
+  cursor: pointer;
+  line-height: 1; /* keep emoji centered */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.styled:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.styled:focus {
+  outline: 3px solid rgba(0, 123, 255, 0.25);
+  outline-offset: 4px;
+}
+
+.styled[aria-pressed="true"] {
+  background: linear-gradient(180deg, #ffb74d, #ff8a50);
+}
