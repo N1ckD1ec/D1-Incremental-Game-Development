@@ -24,7 +24,7 @@ function renderCounter() {
   counterEl.textContent = formatCount(counter);
 }
 document.body.appendChild(counterEl);
-renderCounter();  
+renderCounter();
 
 // Step 1
 // Create a button
@@ -44,5 +44,3 @@ btn.addEventListener("click", () => {
 });
 
 document.body.appendChild(btn);
-
-
