@@ -1,7 +1,7 @@
 import "./style.css";
 
 document.body.innerHTML = `
-  <h1>Click Them Emojis</h1>
+  <h1>Click Them Emojis Bud</h1>
 `;
 
 // Step 2
