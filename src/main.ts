@@ -1,13 +1,11 @@
-import exampleIconUrl from "./noun-paperclip-7598668-00449F.png";
 import "./style.css";
 
 document.body.innerHTML = `
-  <h1>Work in progress</h1>
-  <p>Example image asset: <img src="${exampleIconUrl}" class="icon" /></p>
+  <h1>Click Them Emojis</h1>
 `;
 
 // Step 2
-const unitLabel = "smiles"; // fun label to match the 😊/😡 theme
+const unitLabel = "Emoji"; // fun label to match the 😊/😡 theme
 let counter: number = 0;
 
 // Step 5: growth rate starts at 0 (no auto-increase until you buy upgrades)
@@ -33,7 +31,7 @@ renderCounter();
 
 // Step 1 — big emoji button
 const btn = document.createElement("button");
-btn.className = "styled";
+btn.className = "styled large";
 btn.type = "button";
 btn.textContent = "😊";
 btn.setAttribute("aria-label", "Emoji button");
