@@ -229,9 +229,11 @@ interface Upgrade {
 }
 
 const upgrades: Upgrade[] = [
-  { key: "💵", name: "💵", cost: 10, amount: 0.1, purchased: 0 },
-  { key: "💰", name: "💰", cost: 50, amount: 0.5, purchased: 0 },
-  { key: "🪙", name: "🪙", cost: 125, amount: 2.0, purchased: 0 },
+  { key: "💵", name: "💵", cost: 10, amount: 1, purchased: 0 },
+  { key: "💰", name: "💰", cost: 50, amount: 10, purchased: 0 },
+  { key: "🪙", name: "🪙", cost: 125, amount: 20, purchased: 0 },
+  { key: "💎", name: "💎", cost: 5000, amount: 100, purchased: 0 },
+  { key: "💹", name: "💹", cost: 10000, amount: 1000, purchased: 0 },
 ];
 
 const upgradeElems: Array<
