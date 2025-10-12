@@ -226,14 +226,50 @@ interface Upgrade {
   cost: number;
   amount: number; // units per second
   purchased: number;
+  hint?: string;
 }
 
 const upgrades: Upgrade[] = [
-  { key: "💵", name: "💵", cost: 10, amount: 1, purchased: 0 },
-  { key: "💰", name: "💰", cost: 50, amount: 10, purchased: 0 },
-  { key: "🪙", name: "🪙", cost: 125, amount: 20, purchased: 0 },
-  { key: "💎", name: "💎", cost: 5000, amount: 100, purchased: 0 },
-  { key: "💹", name: "💹", cost: 10000, amount: 1000, purchased: 0 },
+  {
+    key: "💵",
+    name: "💵",
+    cost: 10,
+    amount: 1,
+    purchased: 0,
+    hint: "Big Dolla",
+  },
+  {
+    key: "💰",
+    name: "💰",
+    cost: 50,
+    amount: 10,
+    purchased: 0,
+    hint: "Big Cash Out",
+  },
+  {
+    key: "🪙",
+    name: "🪙",
+    cost: 125,
+    amount: 20,
+    purchased: 0,
+    hint: "GOLD !!!",
+  },
+  {
+    key: "💎",
+    name: "💎",
+    cost: 5000,
+    amount: 100,
+    purchased: 0,
+    hint: "Mining Diamond I See",
+  },
+  {
+    key: "💹",
+    name: "💹",
+    cost: 10000,
+    amount: 1000,
+    purchased: 0,
+    hint: "Investing In Stonks",
+  },
 ];
 
 const upgradeElems: Array<
@@ -255,7 +291,11 @@ for (const u of upgrades) {
   const btnU = document.createElement("button");
   btnU.className = "styled";
   btnU.type = "button";
-  btnU.textContent = `Buy ${u.name} +${u.amount} auto/s (cost ${u.cost})`;
+  // Button shows only name and amount; cost and rate shown on hover via title
+  btnU.textContent = `${u.name} +${u.amount}`;
+  btnU.title = `${u.hint ? u.hint + " — " : ""}${
+    u.amount.toFixed(1)
+  } ${unitLabel}/s — cost ${u.cost.toFixed(2)}`;
 
   const countEl = document.createElement("span");
   countEl.style.marginLeft = "0.75rem";
@@ -272,7 +312,10 @@ for (const u of upgrades) {
       renderRate();
       renderPurchasedStatus();
       countEl.textContent = `x${u.purchased}`;
-      btnU.textContent = `Buy ${u.name} +${u.amount} auto/s (cost ${u.cost})`;
+      // update tooltip to show new cost and hint
+      btnU.title = `${u.hint ? u.hint + " — " : ""}${
+        u.amount.toFixed(1)
+      } ${unitLabel}/s — cost ${u.cost.toFixed(2)}`;
       updateUpgradeButtons();
     }
   });
