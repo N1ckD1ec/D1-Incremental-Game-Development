@@ -124,10 +124,13 @@ for (const u of upgrades) {
       counter -= u.cost;
       growthRatePerSec += u.amount;
       u.purchased += 1;
+      // increase the cost by 15% after purchase
+      u.cost = Number((u.cost * 1.15).toFixed(2));
       renderCounter();
       renderRate();
       renderPurchasedStatus();
       countEl.textContent = `x${u.purchased}`;
+      btnU.textContent = `Buy ${u.name} +${u.amount} auto/s (cost ${u.cost})`;
       updateUpgradeButtons();
     }
   });
