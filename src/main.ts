@@ -229,6 +229,7 @@ interface Upgrade {
   hint?: string;
 }
 
+
 const upgrades: Upgrade[] = [
   {
     key: "Cash",
