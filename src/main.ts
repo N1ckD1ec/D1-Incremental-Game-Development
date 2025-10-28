@@ -3,8 +3,9 @@ import "./style.css";
 document.body.innerHTML = `
   <h1>Click Them Emojis Bud</h1>
 `;
+
 // =============== GAME STATE ===============
-// Counters and growth rate variables
+// Counter and growth rate variables
 
 // Step 2
 const unitLabel = "Emoji"; // fun label to match the 😊/😡 theme
@@ -15,24 +16,13 @@ let growthRatePerSec: number = 0;
 
 // =============== UI ELEMENTS ===============
 // Counter display and rate display
-// (DOM elements for showing counter, rate and the main clicker)
-// Counter display
+// (DOM elements for showing counter, rate, the main clicker, shop and status)
 const counterEl = document.createElement("div");
 counterEl.id = "counter";
 counterEl.setAttribute("role", "status");
 counterEl.setAttribute("aria-live", "polite");
 counterEl.style.margin = "1rem 0";
 document.body.appendChild(counterEl);
-
-function formatCount(n: number): string {
-  // Show integers without decimals, otherwise show two decimals for fractional counts
-  const pretty = Number.isInteger(n) ? String(n) : n.toFixed(2);
-  return `${pretty} ${unitLabel}`;
-}
-function renderCounter() {
-  counterEl.textContent = formatCount(counter);
-}
-renderCounter();
 
 // Step 1 — big emoji button
 const btn = document.createElement("button");
@@ -42,6 +32,34 @@ btn.textContent = "😊";
 btn.setAttribute("aria-label", "Emoji button");
 btn.setAttribute("aria-pressed", "false");
 document.body.appendChild(btn);
+
+// Step 4 — growth rate display
+const rateEl = document.createElement("div");
+rateEl.id = "rate";
+rateEl.style.marginTop = "0.5rem";
+document.body.appendChild(rateEl);
+
+// Shop container (upgrade UI will be populated later)
+const shopContainer = document.createElement("div");
+shopContainer.style.marginTop = "1rem";
+document.body.appendChild(shopContainer);
+
+// Purchased status element (will be updated after upgrades initialized)
+const purchasedStatus = document.createElement("div");
+purchasedStatus.style.marginTop = "0.5rem";
+document.body.appendChild(purchasedStatus);
+
+// =============== CORE FUNCTIONS ===============
+// Utility functions and small helpers
+function formatCount(n: number): string {
+  // Show integers without decimals, otherwise show two decimals for fractional counts
+  const pretty = Number.isInteger(n) ? String(n) : n.toFixed(2);
+  return `${pretty} ${unitLabel}`;
+}
+
+function renderCounter() {
+  counterEl.textContent = formatCount(counter);
+}
 
 // Big emoji pool for Step 7 UI — many expressive emoji
 const emojiPool = [
@@ -185,8 +203,29 @@ function randomEmoji() {
   return emojiPool[Math.floor(Math.random() * emojiPool.length)];
 }
 
+function renderRate() {
+  rateEl.textContent = `growth: ${growthRatePerSec.toFixed(2)} ${unitLabel}/s`;
+}
+
 // =============== EVENT HANDLERS ===============
-// Button click handlers (main clicker)
+// Button click handlers and affordance updates
+// Declare upgradeElems early so updateUpgradeButtons can reference it even
+// before upgrades are populated later in the file.
+const upgradeElems: Array<
+  {
+    u: { cost: number; purchased?: number };
+    btn: HTMLButtonElement;
+    countEl: HTMLElement;
+  }
+> = [];
+
+function updateUpgradeButtons() {
+  for (const el of upgradeElems) {
+    el.btn.disabled = counter < el.u.cost;
+  }
+}
+
+// Main click handler for the big emoji button
 btn.addEventListener("click", () => {
   counter += 1;
   // Set a random emoji from the pool on each click
@@ -196,18 +235,7 @@ btn.addEventListener("click", () => {
   updateUpgradeButtons();
 });
 
-// Step 4 — growth rate display
-const rateEl = document.createElement("div");
-rateEl.id = "rate";
-rateEl.style.marginTop = "0.5rem";
-function renderRate() {
-  rateEl.textContent = `growth: ${growthRatePerSec.toFixed(2)} ${unitLabel}/s`;
-}
-document.body.appendChild(rateEl);
-renderRate();
-
-// Animation loop (time-based tick)
-// =============== EVENT HANDLERS ===============
+// =============== GAME LOOP ===============
 // Animation loop that applies fractional growth independent of frame rate
 let last = performance.now();
 function tick(now: number) {
@@ -222,15 +250,9 @@ function tick(now: number) {
 
   requestAnimationFrame(tick);
 }
-requestAnimationFrame(tick);
 
 // =============== UPGRADE SYSTEM ===============
-// Upgrade interface and shop initialization
-// Step 6 — multiple upgrades and status
-const shopContainer = document.createElement("div");
-shopContainer.style.marginTop = "1rem";
-document.body.appendChild(shopContainer);
-
+// Upgrade interface and shop initialization (populated last)
 interface Upgrade {
   key: string;
   name: string;
@@ -283,17 +305,10 @@ const upgrades: Upgrade[] = [
   },
 ];
 
-const upgradeElems: Array<
-  { u: Upgrade; btn: HTMLButtonElement; countEl: HTMLElement }
-> = [];
-
-const purchasedStatus = document.createElement("div");
-purchasedStatus.style.marginTop = "0.5rem";
 function renderPurchasedStatus() {
   purchasedStatus.innerHTML = upgrades.map((u) => `${u.name}: ${u.purchased}`)
     .join(" — ");
 }
-renderPurchasedStatus();
 
 for (const u of upgrades) {
   const row = document.createElement("div");
@@ -338,12 +353,10 @@ for (const u of upgrades) {
   upgradeElems.push({ u, btn: btnU, countEl });
 }
 
-document.body.appendChild(purchasedStatus);
-
-function updateUpgradeButtons() {
-  for (const el of upgradeElems) {
-    el.btn.disabled = counter < el.u.cost;
-  }
-}
-
+// =============== FINAL INITIALIZATION ===============
+// Render initial values and start the game loop
+renderCounter();
+renderRate();
+renderPurchasedStatus();
 updateUpgradeButtons();
+requestAnimationFrame(tick);
