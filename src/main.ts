@@ -232,7 +232,7 @@ interface Upgrade {
 const upgrades: Upgrade[] = [
   {
     key: "💵",
-    name: "💵",
+    name: "Cash",
     cost: 10,
     amount: 1,
     purchased: 0,
@@ -240,7 +240,7 @@ const upgrades: Upgrade[] = [
   },
   {
     key: "💰",
-    name: "💰",
+    name: "Moeny Bag",
     cost: 50,
     amount: 10,
     purchased: 0,
@@ -248,7 +248,7 @@ const upgrades: Upgrade[] = [
   },
   {
     key: "🪙",
-    name: "🪙",
+    name: "Gold Coin",
     cost: 125,
     amount: 20,
     purchased: 0,
@@ -256,7 +256,7 @@ const upgrades: Upgrade[] = [
   },
   {
     key: "💎",
-    name: "💎",
+    name: "Diamond",
     cost: 5000,
     amount: 100,
     purchased: 0,
@@ -264,7 +264,7 @@ const upgrades: Upgrade[] = [
   },
   {
     key: "💹",
-    name: "💹",
+    name: "Stocks",
     cost: 10000,
     amount: 1000,
     purchased: 0,
