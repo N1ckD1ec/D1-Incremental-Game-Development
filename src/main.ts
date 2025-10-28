@@ -4,6 +4,9 @@ document.body.innerHTML = `
   <h1>Click Them Emojis Bud</h1>
 `;
 
+// =============== GAME STATE ===============
+// Counter and growth rate variables
+
 // Step 2
 const unitLabel = "Emoji"; // fun label to match the 😊/😡 theme
 let counter: number = 0;
@@ -11,6 +14,9 @@ let counter: number = 0;
 // Step 5: growth rate starts at 0 (no auto-increase until you buy upgrades)
 let growthRatePerSec: number = 0;
 
+// =============== UI ELEMENTS ===============
+// Counter display and rate display
+// (DOM elements for showing counter, rate and the main clicker)
 // Counter display
 const counterEl = document.createElement("div");
 counterEl.id = "counter";
@@ -180,6 +186,8 @@ function randomEmoji() {
   return emojiPool[Math.floor(Math.random() * emojiPool.length)];
 }
 
+// =============== EVENT HANDLERS ===============
+// Button click handlers (main clicker)
 btn.addEventListener("click", () => {
   counter += 1;
   // Set a random emoji from the pool on each click
@@ -199,7 +207,9 @@ function renderRate() {
 document.body.appendChild(rateEl);
 renderRate();
 
-// Time-based animation loop that does NOT assume 60fps
+// Animation loop (time-based tick)
+// =============== EVENT HANDLERS ===============
+// Animation loop that applies fractional growth independent of frame rate
 let last = performance.now();
 function tick(now: number) {
   const dt = (now - last) / 1000; // seconds since last frame
@@ -215,6 +225,8 @@ function tick(now: number) {
 }
 requestAnimationFrame(tick);
 
+// =============== UPGRADE SYSTEM ===============
+// Upgrade interface and shop initialization
 // Step 6 — multiple upgrades and status
 const shopContainer = document.createElement("div");
 shopContainer.style.marginTop = "1rem";
@@ -228,7 +240,6 @@ interface Upgrade {
   purchased: number;
   hint?: string;
 }
-
 
 const upgrades: Upgrade[] = [
   {
