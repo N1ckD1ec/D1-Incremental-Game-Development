@@ -240,7 +240,7 @@ const upgrades: Upgrade[] = [
   },
   {
     key: "💰",
-    name: "Moeny Bag",
+    name: "Money Bag",
     cost: 50,
     amount: 10,
     purchased: 0,
