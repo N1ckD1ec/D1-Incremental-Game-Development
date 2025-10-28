@@ -3,9 +3,8 @@ import "./style.css";
 document.body.innerHTML = `
   <h1>Click Them Emojis Bud</h1>
 `;
-
 // =============== GAME STATE ===============
-// Counter and growth rate variables
+// Counters and growth rate variables
 
 // Step 2
 const unitLabel = "Emoji"; // fun label to match the 😊/😡 theme
