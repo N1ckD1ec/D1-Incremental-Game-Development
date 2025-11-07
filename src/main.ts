@@ -42,11 +42,13 @@ document.body.appendChild(rateEl);
 // Shop container (upgrade UI will be populated later)
 const shopContainer = document.createElement("div");
 shopContainer.style.marginTop = "1rem";
+shopContainer.className = "shop";
 document.body.appendChild(shopContainer);
 
 // Purchased status element (will be updated after upgrades initialized)
 const purchasedStatus = document.createElement("div");
 purchasedStatus.style.marginTop = "0.5rem";
+purchasedStatus.id = "purchased-status";
 document.body.appendChild(purchasedStatus);
 
 // =============== CORE FUNCTIONS ===============

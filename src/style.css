@@ -56,3 +56,50 @@ body {
 .styled[aria-pressed="true"] {
   background: linear-gradient(180deg, #ffb74d, #ff8a50);
 }
+
+/* Shop layout: make upgrade buttons uniform, symmetrical and aligned */
+.shop > div {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  /* make each row a fixed-width box so rows align vertically */
+  width: 320px;
+  position: relative;
+}
+
+.shop .styled {
+  /* Fixed size for uniform upgrade buttons (main .styled.large overrides these) */
+  width: 220px;
+  height: 64px;
+  box-sizing: border-box; /* include border in size */
+  padding: 0; /* padding managed by fixed height/width */
+  justify-content: center; /* keep content centered */
+  text-align: center;
+}
+
+.shop .styled + span {
+  /* purchase count sits consistently to the right */
+  min-width: 48px;
+  display: inline-block;
+  text-align: left;
+  /* position the count to the right edge of the row so the button can be centered */
+  position: absolute;
+  right: 0.5rem;
+}
+
+/* Center the shop container itself so everything lines up on the same vertical axis */
+.shop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Ensure counter, rate and purchasedStatus match the shop row width and center text */
+#counter,
+#rate,
+.shop + div,
+#purchased-status {
+  width: 320px;
+  text-align: center;
+}
