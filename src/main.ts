@@ -207,6 +207,51 @@ function renderRate() {
   rateEl.textContent = `growth: ${growthRatePerSec.toFixed(2)} ${unitLabel}/s`;
 }
 
+// =============== AUDIO (click sound) ===============
+// Small Web Audio API helper to play a short click/pluck sound on user clicks.
+let audioCtx: AudioContext | null = null;
+function playClickSound() {
+  try {
+    const win = window as unknown as {
+      AudioContext?: typeof AudioContext;
+      webkitAudioContext?: typeof AudioContext;
+    };
+    const Ctor = win.AudioContext ?? win.webkitAudioContext;
+    if (!Ctor) return; // Web Audio not available
+    if (!audioCtx) audioCtx = new Ctor();
+
+    const ctx = audioCtx!;
+    const now = ctx.currentTime;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    // bright pluck
+    o.type = "triangle";
+    o.frequency.value = 700 + Math.random() * 300;
+    g.gain.value = 0;
+
+    o.connect(g);
+    g.connect(ctx.destination);
+
+    // quick attack and decay
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.exponentialRampToValueAtTime(0.2, now + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+
+    o.start(now);
+    o.stop(now + 0.2);
+    o.onended = () => {
+      try {
+        o.disconnect();
+        g.disconnect();
+      } catch {
+        /* ignore */
+      }
+    };
+  } catch {
+    // ignore failures (older browsers, locked audio, etc.)
+  }
+}
+
 // =============== EVENT HANDLERS ===============
 // Button click handlers and affordance updates
 // Declare upgradeElems early so updateUpgradeButtons can reference it even
@@ -227,6 +272,8 @@ function updateUpgradeButtons() {
 
 // Main click handler for the big emoji button
 btn.addEventListener("click", () => {
+  // play whimsical click sound
+  playClickSound();
   counter += 1;
   // Set a random emoji from the pool on each click
   btn.textContent = randomEmoji();
